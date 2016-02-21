@@ -12,12 +12,17 @@ class Client
         $this->http = new GuzzleHttp;
     }
 
-    public function ping()
+    public function ping($fetchFrom = 'http://status.ls-rp.com/status.json')
     {
-        $response = $this->http->request('GET', 'http://status.ls-rp.com/status.json');
+        $response = $this->http->request('GET', $fetchFrom);
         $body = $response->getBody()->getContents();
 
         $body = json_decode($body, true);
+
+        if ($body === null || is_array($body) === false)
+        {
+            throw new PingException("lsrp-auth-php has failed to fetch servers' status from the API.");
+        }
 
         if (array_key_exists('ucp', $body))
         {
@@ -29,10 +34,6 @@ class Client
             {
                 return false;
             }
-        }
-        else
-        {
-            throw new PingException("lsrp-auth-php has failed to fetch servers' status from the API.");
         }
     }
 }

@@ -18,4 +18,18 @@ class ClientTest extends TestCase
         $response = $client->ping();
         $this->assertTrue(($response === true || $response === false));
     }
+
+    /**
+     * @expectedException Giampaolo\LSRP\Auth\Exceptions\PingException
+     */
+    public function testIfPingDoesntWorkOrIfApiDoesNotExist()
+    {
+        $client   = new Client;
+        $response = $client->ping("http://status.ls-rp.com/wrong_file_name.json");
+    }
+
+    public function testLoginWithUsernameAndPassword()
+    {
+        $client   =
+    }
 }
