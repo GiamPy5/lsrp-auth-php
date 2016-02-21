@@ -1,0 +1,34 @@
+{
+    "name": "giampaolofalqui/lsrp-auth-php",
+    "description": "LS-RP authentication API built in PHP.",
+    "version": "0.0.1-dev",
+    "keywords": ["lsrp", "authentication", "php", "library", "auth", "samp"],
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "email":  "giampaolofalqui@gmail.com",
+        "issues": "https://github.com/GiampaoloFalqui/lsrp-auth-php/issues",
+        "wiki":   "https://github.com/GiampaoloFalqui/lsrp-auth-php/wiki",
+        "source": "https://github.com/GiampaoloFalqui/lsrp-auth-php"
+    },
+    "authors": [
+        {
+            "name":  "Giampaolo Falqui",
+            "email": "giampaolofalqui@gmail.com",
+            "role":  "Lead Developer"
+        }
+    ],
+    "require":     {},
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Giampaolo\\LSRP\\Auth\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Giampaolo\\LSRP\\Auth\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}
