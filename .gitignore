@@ -12,3 +12,6 @@ storage/
 .env.php
 .env
 .env.example
+
+# Sublime Text 3 specific
+*.*sublime*
