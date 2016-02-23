@@ -9,31 +9,34 @@ class Client
 {
     public function __construct()
     {
-        $this->http = new GuzzleHttp;
+        $this->http = new GuzzleHttp(['cookies' => true]);
     }
 
     public function ping($fetchFrom = 'http://status.ls-rp.com/status.json')
     {
-        $response = $this->http->request('GET', $fetchFrom);
-        $body = $response->getBody()->getContents();
-
-        $body = json_decode($body, true);
-
-        if ($body === null || is_array($body) === false)
+        try
         {
-            throw new PingException("lsrp-auth-php has failed to fetch servers' status from the API.");
-        }
+            $response = $this->http->request('GET', $fetchFrom, [
+                'timeout' => 3
+            ]);
 
-        if (array_key_exists('ucp', $body))
+            $body = $response->getBody()->getContents();
+
+            $body = json_decode($body, true);
+
+            if ($body === null || is_array($body) === false)
+            {
+                throw new PingException("lsrp-auth-php has failed to fetch servers' status from the API (parsing error).");
+            }
+
+            if (array_key_exists('ucp', $body))
+            {
+                return (int) $body['ucp'] === 1;
+            }
+
+        } catch (\GuzzleHttp\Exception\ConnectException $e)
         {
-            if ((int) $body['ucp'] === 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            throw new PingException("lsrp-auth-php has failed to fetch servers' status from the API (connection error).");
         }
     }
 }
